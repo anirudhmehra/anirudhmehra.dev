@@ -23,6 +23,6 @@ This website is where I publish longer writing, technical notes, and occasional 
 
 ## Elsewhere
 
-You can find my code on [GitHub](https://github.com/anirudhmehra).
+You can find me on [GitHub](https://github.com/anirudhmehra) and [LinkedIn](https://www.linkedin.com/in/mehra-anirudh/).
 
 More sections and writing will land here over time.
