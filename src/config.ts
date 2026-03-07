@@ -1,9 +1,8 @@
 export const SITE = {
-  website: "https://anirudhmehra.dev/",
+  website: "https://www.anirudhmehra.dev/",
   author: "Anirudh Mehra",
   profile: "https://github.com/anirudhmehra",
-  desc:
-    "Personal website and blog of Anirudh Mehra, a developer at Oracle Cloud.",
+  desc: "Personal website and blog of Anirudh Mehra, a developer at Oracle Cloud.",
   title: "Anirudh Mehra",
   ogImage: "",
   lightAndDarkMode: true,
