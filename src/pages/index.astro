@@ -56,13 +56,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           about me
         </LinkButton>.
       </p>
-      <p class="mt-3 text-sm text-foreground/75">
-        <a
-          href="/resume/anirudh-mehra-resume.pdf"
+      <p class="mt-2">
+        You can also read my
+        <LinkButton
           class="underline decoration-dashed underline-offset-4 hover:text-accent"
+          href="/resume/anirudh-mehra-resume.pdf"
         >
-          Resume
-        </a>
+          resume
+        </LinkButton>.
       </p>
       {
         // only display if at least one social link is enabled

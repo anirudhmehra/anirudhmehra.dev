@@ -9,6 +9,8 @@ I work on software systems and developer-facing products, with a particular inte
 
 This website is where I publish longer writing, technical notes, and occasional project breakdowns.
 
+You can also read my [resume](/resume/anirudh-mehra-resume.pdf).
+
 ## What you will find here
 
 - posts on engineering, cloud, and web development
