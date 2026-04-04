@@ -18,6 +18,12 @@ interface Social {
 
 export const SOCIALS: Social[] = [
   {
+    name: "Email",
+    href: `mailto:${SITE.email}`,
+    linkTitle: `Email ${SITE.title}`,
+    icon: IconMail,
+  },
+  {
     name: "GitHub",
     href: "https://github.com/anirudhmehra",
     linkTitle: `${SITE.title} on GitHub`,

@@ -26,3 +26,6 @@ pnpm-debug.log*
 # pagefind
 
 public/pagefind
+
+# local resume build artifacts
+resume-source/*.pdf

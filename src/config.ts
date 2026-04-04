@@ -2,6 +2,7 @@ export const SITE = {
   website: "https://www.anirudhmehra.dev/",
   title: "Anirudh Mehra",
   desc: "Personal website and blog of Anirudh Mehra on cloud infrastructure, web engineering, developer tools, and software systems.",
+  email: "me@anirudhmehra.dev",
   jobTitle: "Developer at Oracle Cloud",
   profile: "https://github.com/anirudhmehra",
   sameAs: [
