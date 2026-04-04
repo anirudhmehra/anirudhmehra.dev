@@ -1,9 +1,14 @@
 export const SITE = {
   website: "https://www.anirudhmehra.dev/",
-  author: "Anirudh Mehra",
-  profile: "https://github.com/anirudhmehra",
-  desc: "Personal website and blog of Anirudh Mehra, a developer at Oracle Cloud.",
   title: "Anirudh Mehra",
+  desc: "Personal website and blog of Anirudh Mehra on cloud infrastructure, web engineering, developer tools, and software systems.",
+  jobTitle: "Developer at Oracle Cloud",
+  profile: "https://github.com/anirudhmehra",
+  sameAs: [
+    "https://github.com/anirudhmehra",
+    "https://www.linkedin.com/in/mehra-anirudh/",
+  ],
+  location: "India",
   ogImage: "",
   lightAndDarkMode: true,
   postPerIndex: 4,

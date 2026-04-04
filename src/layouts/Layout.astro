@@ -7,58 +7,104 @@ import "@/styles/global.css";
 
 type Props = {
   title?: string;
-  author?: string;
-  profile?: string;
   description?: string;
   ogImage?: string;
-  canonicalURL?: string;
+  canonicalURL?: string | URL;
   pubDatetime?: Date;
   modDatetime?: Date | null;
+  robots?: string;
+  tags?: string[];
   scrollSmooth?: boolean;
 };
 
 const {
   title = SITE.title,
-  author = SITE.author,
-  profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
-  canonicalURL = new URL(Astro.url.pathname, SITE.website),
+  canonicalURL = Astro.url.pathname,
   pubDatetime,
   modDatetime,
+  robots = "index,follow",
+  tags = [],
   scrollSmooth = false,
 } = Astro.props;
 
-const socialImageURL = new URL(ogImage, SITE.website);
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `${title}`,
-  image: `${socialImageURL}`,
-  datePublished: `${pubDatetime?.toISOString()}`,
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
+const canonicalHref = new URL(canonicalURL, SITE.website).toString();
+const socialImageURL = new URL(ogImage, SITE.website).toString();
+const isArticle = Boolean(pubDatetime);
+const personData = {
+  "@type": "Person",
+  name: SITE.title,
+  url: SITE.website,
+  jobTitle: SITE.jobTitle,
+  worksFor: {
+    "@type": "Organization",
+    name: "Oracle Cloud",
+  },
+  sameAs: SITE.sameAs,
+  ...(SITE.location && {
+    homeLocation: {
+      "@type": "Place",
+      name: SITE.location,
     },
-  ],
+  }),
 };
+
+const structuredData =
+  isArticle && pubDatetime
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: `${title}`,
+        description: `${description}`,
+        image: `${socialImageURL}`,
+        url: canonicalHref,
+        mainEntityOfPage: canonicalHref,
+        datePublished: pubDatetime.toISOString(),
+        ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+        ...(tags.length > 0 && { keywords: tags }),
+        author: [personData],
+        publisher: personData,
+      }
+    : [
+        {
+          "@context": "https://schema.org",
+          ...personData,
+          mainEntityOfPage: canonicalHref,
+          description: `${description}`,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE.title,
+          description: `${description}`,
+          url: SITE.website,
+          inLanguage: SITE.lang ?? "en",
+          about: {
+            "@type": "Person",
+            name: SITE.title,
+            url: SITE.website,
+          },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${new URL("search/", SITE.website).toString()}?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        },
+      ];
 ---
 
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
+  lang={SITE.lang ?? "en"}
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={canonicalHref} />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Load Font -->
@@ -71,13 +117,16 @@ const structuredData = {
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content={author} />
+    <meta name="author" content={SITE.title} />
+    <meta name="robots" content={robots} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={isArticle ? "article" : "website"} />
+    <meta property="og:site_name" content={SITE.title} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={canonicalHref} />
     <meta property="og:image" content={socialImageURL} />
 
     <!-- Article Published/Modified time -->
@@ -97,20 +146,33 @@ const structuredData = {
         />
       )
     }
+    {isArticle && <meta property="article:author" content={SITE.title} />}
+    {tags.map(tag => <meta property="article:tag" content={tag} />)}
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:url" content={canonicalHref} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
+    <meta property="twitter:creator" content="@anirudhmehra" />
 
     <!-- Google JSON-LD Structured data -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(structuredData)}
-    />
+    {Array.isArray(structuredData)
+      ? structuredData.map(data => (
+          <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(data)}
+          />
+        ))
+      : (
+          <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(structuredData)}
+          />
+        )}
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
@@ -121,7 +183,16 @@ const structuredData = {
       href={new URL("rss.xml", Astro.site)}
     />
 
-    <meta name="theme-color" content="" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fdfdfd"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#212737"
+    />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,

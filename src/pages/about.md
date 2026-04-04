@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "About"
+description: "About Anirudh Mehra, his work at Oracle Cloud, and what this site covers."
 ---
 
 I am Anirudh Mehra, a developer at Oracle Cloud.
