@@ -1,11 +1,12 @@
 ---
-pubDatetime: 2026-03-14T12:00:00Z
+pubDatetime: 2026-04-04T04:00:00Z
 title: Dev at the speed of thought
 featured: true
 draft: false
 tags:
   - codex
-  - blog
+  - ai agents
+  - developer tools
 description: Using coding agents in 2026
 ---
 
