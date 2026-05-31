@@ -1,28 +1,44 @@
 \documentclass[10pt,letterpaper]{article}
 
-\usepackage[T1]{fontenc}
 \usepackage[margin=0.47in]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
-\usepackage{tabularx}
-\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage{cmap}
+  \usepackage{lmodern}
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\else
+  \usepackage{fontspec}
+  \setmainfont{lmroman10-regular.otf}[
+    BoldFont=lmroman10-bold.otf,
+    ItalicFont=lmroman10-italic.otf,
+    BoldItalicFont=lmroman10-bolditalic.otf,
+    Ligatures=NoCommon,
+    Kerning=Off
+  ]
+\fi
 \usepackage{microtype}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 \urlstyle{same}
-\linespread{1.02}
+\linespread{1.0}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 
-\setlist[itemize]{leftmargin=1.15em, itemsep=0.22em, topsep=0.2em, parsep=0pt, partopsep=0pt}
+\setlist[itemize]{leftmargin=1.15em, itemsep=0.16em, topsep=0.12em, parsep=0pt, partopsep=0pt}
 \titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{0.42em}\titlerule]
-\titlespacing*{\section}{0pt}{1.15em}{0.82em}
+\titlespacing*{\section}{0pt}{1.05em}{0.72em}
 
 \newcommand{\contactsep}{\hspace{0.45em}\textbar\hspace{0.45em}}
 \newcommand{\resumejob}[4]{%
-  \textbf{#1} \hfill #2\\
-  \textit{#3} \hfill \textit{#4}\\[-0.32em]
+  \textbf{#3} \hfill \textit{#4}\\
+  \textit{#1} \hfill \textit{#2}\\[-0.9em]
 }
 
 \begin{document}
@@ -36,44 +52,43 @@ India \contactsep \href{mailto:me@anirudhmehra.dev}{me@anirudhmehra.dev} \contac
 \vspace{0.22em}
 
 \section*{Professional Summary}
-Senior backend and platform engineer with 6+ years building reliability-critical cloud infrastructure and managed database services at fleet scale. Strong background in distributed systems, backup and recovery, high availability, workflow orchestration, production debugging, and AI-assisted operational tooling. Combines deep infrastructure ownership with design leadership across service-runtime and control-plane systems, plus practical AI adoption that improves engineering execution.
+Senior backend and platform engineer with 6+ years building reliability-critical cloud infrastructure and database services at large fleet scale. Strong background in distributed systems, backup and recovery, high availability, workflow orchestration, and AI-assisted operational tooling. Combines deep infrastructure ownership with design leadership across service-runtime and control-plane systems, plus practical AI adoption that improves engineering execution.
 
 \section*{Experience}
-\resumejob{Oracle}{Hyderabad, India}{Senior Member of Technical Staff}{Mar 2023 -- Present}
+\resumejob{Oracle}{Hyderabad, India}{Senior Member of Technical Staff}{Mar 2023 - Present}
 \begin{itemize}
-  \item Own recoverability and high-availability workflows for Oracle Base Database Service on OCI across service-runtime and control-plane systems supporting \textbf{70K+ managed database systems}.
-  \item Serve as the primary escalation point for BaseDB backup and recovery issues, operating fleet-wide workflows on an \textbf{hourly cadence} with strong production stability.
-  \item Lead design across service-runtime and control-plane layers for standby backup and restore, cross-incarnation recovery, long-term restore, restore preview, and multi-standby workflows.
+  \item Own recoverability and high-availability workflows for Oracle Base Database Service on Oracle Cloud Infrastructure (OCI) across service-runtime and control-plane systems supporting \textbf{70K+ managed database systems}.
+  \item Serve as the primary escalation point for Base Database Service (BaseDB) backup and recovery issues, operating fleet-wide workflows on an hourly cadence with \textbf{strong production stability}.
+  \item \textbf{Lead design} across service-runtime and control-plane layers for standby backup and restore, cross-incarnation recovery, long-term restore, restore preview, and multi-standby workflows.
   \item Partner with QA, SRE, database, and infrastructure teams to investigate failures, harden rollouts, and land durable fixes; delivered improvements across \textbf{1,200+ engineering tickets} over Oracle tenure.
-  \item Built a \textbf{Codex-powered operations agent} for safe multi-step execution across OCI APIs, Linux VMs, and Oracle Database workflows, delivering order-of-magnitude productivity gains for the team.
-  \item Lead team AI adoption and strategy through MCP- and LLM-based tooling, including mentoring development of a retrieval-based assistant for similar-issue discovery and solution guidance.
+  \item Built an AI operations agent for safe multi-step execution across OCI APIs, Linux VMs, and Oracle Database workflows, delivering \textbf{order-of-magnitude productivity gains} for the team.
+  \item \textbf{Lead team AI adoption and strategy} through Model Context Protocol (MCP)- and Large Language Model (LLM)-based tooling, including mentoring development of a retrieval-based assistant for similar-issue discovery and solution guidance.
 \end{itemize}
 
-\textit{Member of Technical Staff} \hfill \textit{Sep 2020 -- Mar 2023}\\[-0.45em]
+\vspace{0.18em}
+\textbf{Member of Technical Staff} \hfill \textit{Sep 2020 - Mar 2023}\\
+\textit{Oracle} \hfill \textit{Hyderabad, India}\\[-0.9em]
 \begin{itemize}
-  \item Built and hardened backend workflows for backup and recovery automation, pluggable database operations, and service reliability.
-  \item Shipped features across standby lifecycle, restore automation, recovery-service integrations, object-storage backup flows, and vault-backed credential and key-management paths.
+  \item Built and hardened backend workflows for \textbf{backup and recovery automation} across pluggable database operations and service reliability.
+  \item Delivered \textbf{10+ customer-facing features} across standby lifecycle, restore automation, recovery-service integrations, object-storage backup flows, and vault-backed credential and key-management paths.
 \end{itemize}
 
 \vspace{0.35em}
-\resumejob{American Express}{Gurugram, India}{Data Analysis Intern}{Jul 2019 -- Dec 2019}
+\resumejob{American Express}{Gurugram, India}{Data Analytics Intern}{Jul 2019 - Dec 2019}
 \begin{itemize}
-  \item Built Python, PySpark, and web applications for analytics and document-processing workflows, including anomaly-detection tooling for transaction datasets with \textbf{millions of records}.
-  \item Developed a document transformation pipeline and dashboard interface for structured model documentation workflows, enabling users to run jobs, track processing history, and review generated summaries.
+  \item Built Python, PySpark, and web-based analytics tooling to process transaction datasets with \textbf{millions of records} and surface anomalous patterns for review.
+  \item Developed a \textbf{document transformation pipeline} and dashboard interface for structured model documentation workflows, enabling users to run jobs, track processing history, and review generated summaries.
 \end{itemize}
 
 \section*{Technical Skills}
 \begin{itemize}
-  \item \textbf{Languages:} Java, Python, SQL
-  \item \textbf{Core Engineering:} Distributed Systems, Backend Engineering, Platform Engineering, Workflow Orchestration, API Design
-  \item \textbf{Infrastructure:} Cloud Infrastructure, Reliability Engineering, Backup and Recovery, High Availability, Disaster Recovery, Production Debugging, Root Cause Analysis, Linux
-  \item \textbf{AI:} LLMs, AI Agents, Model Context Protocol (MCP), Semantic Retrieval, Vector Search
-  \item \textbf{Tools:} PySpark, Astro.js
+  \item \textbf{Languages:} Java, Python, SQL, TypeScript, JavaScript, C, C++
+  \item \textbf{Core Engineering:} Distributed Systems, System Design, Backend Engineering, Platform Engineering, Control Plane Systems, Workflow Orchestration, API Design, REST APIs, Microservices, Event-Driven Architecture, Message Queues, Caching, Reliability Engineering, Linux
+  \item \textbf{Cloud:} OCI, Oracle Database, Database Services, Object Storage, OCI Vault, AWS, GCP, Azure, Cloudflare, Docker, Terraform, CI/CD, GitHub Actions, Observability, Monitoring
+  \item \textbf{AI:} LLMs, Generative AI, AI Agents, Codex, Agentic Workflows, Prompt Engineering, RAG, Embeddings, Semantic Retrieval, Vector Search, Model Context Protocol (MCP), OpenAI, LiveKit, Voice AI, STT, TTS
 \end{itemize}
 
 \section*{Education}
-\begin{tabularx}{\linewidth}{@{}Xr@{}}
-  \textbf{Birla Institute of Technology and Science, Pilani -- Goa Campus} & \textit{B.E. (Hons.), Computer Science, 2016 -- 2020} \\
-\end{tabularx}
+\textbf{Birla Institute of Technology and Science, Pilani, Goa Campus} \hfill \textit{B.E. (Hons.), Computer Science, 2016 - 2020}
 
 \end{document}
